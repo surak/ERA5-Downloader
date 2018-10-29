@@ -5,7 +5,7 @@ c = cdsapi.Client()
 
 if not os.path.isfile('#FILE_NAME#.#FILE_TYPE#'):
    c.retrieve(
-       'reanalysis-era5-single-levels',
+       #DATASET#,
        {
            'product_type':[
                #PRODUCT_TYPE#

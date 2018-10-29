@@ -2,6 +2,7 @@
 <jube>
     <benchmark name="eras_download" outpath="download">
         <parameterset name="systemParameter" init_with="platform.xml">
+            <parameter name="dataset">'reanalysis-era5-single-levels'</parameter>
             <!-- Possible values are 'ensemble_mean','ensemble_members','ensemble_spread','reanalysis' -->
             <parameter name="product_type">'ensemble_mean'</parameter>
             <!-- Possible values for variable: '100m_u_component_of_wind','100m_v_component_of_wind','10m_u_component_of_neutral_wind',
@@ -115,6 +116,7 @@
     <substituteset name="executesub">
         <!-- Default jobscript substitution -->
         <iofile in="download-era5.py.in" out="download-era5.py" />
+        <sub source="#DATASET#" dest="$dataset" />        
         <sub source="#PRODUCT_TYPE#" dest="$product_type" />
         <sub source="#VARIABLE#" dest="$variable" />
         <sub source="#YEAR#" dest="$year" />
