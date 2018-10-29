@@ -1,35 +1,29 @@
 #!/bin/env python3
-import cdsapi
+import cdsapi,os.path
 
 c = cdsapi.Client()
 
-c.retrieve(
-    'reanalysis-era5-single-levels',
-    {
-        'product_type':[
-            #PRODUCT_TYPE#
-        ],
-        'format':'netcdf',
-        'variable':[ #VARIABLE#
-        ],
-        'year':[
-            #YEAR#
-        ],
-        'month':[
-            #MONTH#
-        ],
-        'day':[
-            #DAY#
-        ],
-        'time':[
-            '00:00','01:00','02:00',
-            '03:00','04:00','05:00',
-            '06:00','07:00','08:00',
-            '09:00','10:00','11:00',
-            '12:00','13:00','14:00',
-            '15:00','16:00','17:00',
-            '18:00','19:00','20:00',
-            '21:00','22:00','23:00'
-        ]
-    },
-    'download.nc')
+if not os.path.isfile('#FILE_NAME#.#FILE_TYPE#'):
+   c.retrieve(
+       'reanalysis-era5-single-levels',
+       {
+           'product_type':[
+               #PRODUCT_TYPE#
+           ],
+           'format':'#FILE_TYPE#',
+           'variable':[ #VARIABLE#
+           ],
+           'year':[
+               #YEAR#
+           ],
+           'month':[
+               #MONTH#
+           ],
+           'day':[
+               #DAY#
+           ],
+           'time':[
+               #TIME#
+           ]
+       },
+       '#FILE_NAME#.#FILE_TYPE#')
