@@ -11,8 +11,10 @@ if not os.path.isfile('#FILE_NAME#.#FILE_TYPE#'):
                #PRODUCT_TYPE#
            ],
            'format':'#FILE_TYPE#',
-           'variable':[ #VARIABLE#
+           'variable':[
+               #VARIABLE#
            ],
+           #PRESSURE_LEVEL#
            'year':[
                #YEAR#
            ],

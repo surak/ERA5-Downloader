@@ -14,8 +14,11 @@ pip install cdsapi
 ## How to run
 
 - Create an account on copernicus, and follow the instructions at [https://cds.climate.copernicus.eu/api-how-to] to install the CDS api key.
-- Edit download-era5-jube.xml to choose which data you want (the whole dataset is hundreds of terabytes) The possible values for the variables are written as comments, and a default value exists.
-- Do a `jube run download-era5-jube.xml`. It will perform a combinatory run of all parameters you chose, and download every combination individually. It will create a datasets/ directory on the place you ran jube from. This will be
+- Edit `era5-pressure-levels.jube.xml` (for ERA5 hourly data on pressure levels), or `era5-single-levels.jube.xml` (for ERA5 hourly data on single levels) in order to choose which data you want (each dataset is hundreds of terabytes) 
+
+The possible values for the variables are written as comments, and a default value exists.
+
+- Do a `jube run era5-pressure-levels.jube.xml` (or `jube run era5-single-levels.jube.xml`). It will perform a combinatory run of all parameters you chose, and download every combination individually. It will create a datasets/ directory on the place you ran jube from. This will be
 
 ```
 datasets/2000 (year)
@@ -30,3 +33,10 @@ datasets/2000 (year)
 ```
 
 And inside, the file name is `dataset-product_type-variable-year-month-day-hour.filetype`, e.g.: `reanalysis-era5-single-levels-ensemble_mean-100m_u_component_of_wind-2018-01-01-00:00.brig`
+
+If you want to download multiple sets in a single file (e.g. all hours of the day, not 24 files), you can change the way JUBE creates combination. JUBE interprets the commas as a new combination of parameters, so if you have 
+
+```<parameter name="time">'00:00','01:00','02:00','03:00','04:00','05:00'</parameter>```, JUBE will do 6 separate downloads.
+
+If you change this to 
+```<parameter name="time" separator="!">'00:00','01:00','02:00'!'03:00','04:00','05:00'</parameter>```, then JUBE will perform only two downloads, as the combination is changed by the separator.
