@@ -1,9 +1,13 @@
 #!/bin/env python3
-import cdsapi,os.path
+import cdsapi,shutil,os
+
+pid=os.fork()
+if pid != 0:
+    os._exit(0)
 
 c = cdsapi.Client()
 
-if not os.path.isfile('#FILE_NAME#.#FILE_TYPE#'):
+if not os.path.isfile('#DOWNLOAD_DIR#/#FILE_NAME#.#FILE_TYPE#'):
    c.retrieve(
        #DATASET#,
        {
@@ -25,7 +29,8 @@ if not os.path.isfile('#FILE_NAME#.#FILE_TYPE#'):
                #DAY#
            ],
            'time':[
-               #TIME#
+               #HOUR#
            ]
        },
        '#FILE_NAME#.#FILE_TYPE#')
+   shutil.move('#FILE_NAME#.#FILE_TYPE#', '#DOWNLOAD_DIR#')
