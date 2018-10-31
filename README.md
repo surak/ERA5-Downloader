@@ -14,11 +14,11 @@ pip install cdsapi
 ## How to run
 
 - Create an account on copernicus, and follow the instructions at [https://cds.climate.copernicus.eu/api-how-to] to install the CDS api key.
-- Edit `era5-pressure-levels.jube.xml` (for ERA5 hourly data on pressure levels), or `era5-single-levels.jube.xml` (for ERA5 hourly data on single levels) in order to choose which data you want (each dataset is hundreds of terabytes) 
+- Edit `era5 in order to choose which data you want (each dataset is hundreds of terabytes) 
 
 The possible values for the variables are written as comments, and a default value exists.
 
-- Do a `jube run era5-pressure-levels.jube.xml` (or `jube run era5-single-levels.jube.xml`). It will perform a combinatory run of all parameters you chose, and download every combination individually. It will create a datasets/ directory on the place you ran jube from. This will be
+- Do a `jube run era5.xml. It will perform a combinatory run of all parameters you chose, and download every combination individually. It will create a datasets/ directory on the place you ran jube from. This will be
 
 ```
 datasets/2000 (year)
