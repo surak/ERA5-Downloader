@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jube>
+    <benchmark name="eras_download" outpath="run">
+        <parameterset name="systemParameter" init_with="platform.xml">
+            <!-- possible datasets: 'reanalysis-era5-pressure-levels' or 'reanalysis-era5-single-levels' -->
+            <parameter name="dataset">era5</parameter>
+            <parameter name="class">ea</parameter>
+            <parameter name="date">2008-01-01</parameter>
+            <parameter name="expver">1</parameter>
+            <parameter name="levelist">1</parameter>
+            <parameter name="levtype">ml</parameter>
+            <parameter name="number">0</parameter>
+            <parameter name="param">75</parameter>
+            <parameter name="stream">enda</parameter>
+            <parameter name="time">00:00:00/03:00:00/06:00:00/09:00:00/12:00:00/15:00:00/18:00:00/21:00:00</parameter>
+            <parameter name="type">an</parameter>
+            <!-- Can be "grib" or "netcdf" -->
+            <parameter name="file_type">grib</parameter>
+            <parameter name="file_name" mode="python" separator="#">str("$date").replace("/","-")</parameter>
+            <parameter name="download_dir" mode="python">str("$jube_benchmark_home/dataset-ecmwf/$dataset/$class/$date").replace("'","")</parameter>
+        </parameterset>
+
+    <fileset name="jobfiles">
+        <copy>download-era5-ecmwf.py.in</copy>
+    </fileset>
+
+    <substituteset name="executesub">
+        <!-- Default jobscript substitution -->
+        <iofile in="download-era5-ecmwf.py.in" out="download-era5-ecmwf.py" />
+        <sub source="#DATASET#" dest="$dataset" />
+        <sub source="#CLASS#" dest="$class" />
+        <sub source="#DATE#" dest="$date" />
+        <sub source="#EXPVER#" dest="$expver" />
+        <sub source="#LEVELIST#" dest="$levelist" />
+        <sub source="#LEVTYPE#" dest="$levtype" />
+        <sub source="#NUMBER#" dest="$number" />
+        <sub source="#PARAM#" dest="$param" />
+        <sub source="#STREAM#" dest="$stream" />
+        <sub source="#TIME#" dest="$time" />
+        <sub source="#TYPE#" dest="$type" />
+        <sub source="#FILE_NAME#" dest="$file_name" />
+        <sub source="#FILE_TYPE#" dest="$file_type" />
+        <sub source="#DOWNLOAD_DIR#" dest="$download_dir" />
+    </substituteset>
+
+    <step name="run_script">
+        <do>module load Python/3.6.6</do>
+        <use>systemParameter</use>
+        <use>jobfiles</use>
+        <use>executesub</use>
+        <do>mkdir -p $download_dir</do>
+        <do>python3 download-era5-ecmwf.py</do>
+        </step>
+    </benchmark>
+</jube>

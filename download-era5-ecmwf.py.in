@@ -1,0 +1,25 @@
+#!/bin/env python3
+from ecmwfapi import ECMWFDataServer
+import shutil,os
+pid=os.fork()
+if pid != 0:
+    os._exit(0)
+
+server = ECMWFDataServer()
+if not os.path.isfile('#DOWNLOAD_DIR#/#FILE_NAME#.#FILE_TYPE#'):
+   server.retrieve({
+      "class": "ea",
+      "dataset": "#DATASET#",
+      "date": "#DATE#",
+      "expver": "#EXPVER#",
+      "levelist": "#LEVELIST#",
+      "levtype": "#LEVTYPE#",
+      "number": "#NUMBER#",
+      "param": "#PARAM#",
+      "stream": "#STREAM#",
+      "time": "#TIME#",
+      "type": "#TYPE#",
+      "target": "#FILE_NAME#.#FILE_TYPE#",
+   })
+   shutil.move('#FILE_NAME#.#FILE_TYPE#', '#DOWNLOAD_DIR#')
+   
